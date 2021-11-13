@@ -43,9 +43,14 @@ func main() {
 
 	weatherKey := os.Getenv("WEATHER_KEY")
 
-	weatherApi := "https://api.openweathermap.org/data/2.5/weather?q=" + cityVar + "&appid=" + weatherKey
+	weatherUrl := "https://api.openweathermap.org/data/2.5/weather?q=" + cityVar + "&appid=" + weatherKey
 
-	req, err := http.NewRequest(http.MethodGet, weatherApi, nil)
+	result, err := getForecast(weatherUrl)
+	fmt.Println(result.Weather)
+}
+
+func getForecast(weatherUrl string) (response, error) {
+	req, err := http.NewRequest(http.MethodGet, weatherUrl, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -77,14 +82,5 @@ func main() {
 			string(body), err.Error())
 	}
 
-	fmt.Println(w.Weather)
-
-	// welcome message - done
-	// prompt for input (city name) - done
-	// check- print input (city name) - done
-	// parse input - done
-	// set url for open weather api as a variable - done
-	// request to api - done (200)
-	// parse api response - basic done, extract weather done
-	// return result
+	return w, err
 }
