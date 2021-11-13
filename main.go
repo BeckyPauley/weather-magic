@@ -4,6 +4,8 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"net/http"
+
 	"os"
 
 	"github.com/joho/godotenv"
@@ -26,14 +28,28 @@ func main() {
 
 	weatherKey := os.Getenv("WEATHER_KEY")
 
-	weatherApi := "api.openweathermap.org/data/2.5/weather?q=" + cityVar + "&appid=" + weatherKey
+	weatherApi := "https://api.openweathermap.org/data/2.5/weather?q=" + cityVar + "&appid=" + weatherKey
+
+	req, err := http.NewRequest(http.MethodGet, weatherApi, nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	req.Header.Set("UserAgent", "weather-magic")
+
+	res, err := http.DefaultClient.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Printf("HTTP status: %s\n", res.Status)
 
 	// welcome message - done
 	// prompt for input (city name) - done
 	// check- print input (city name) - done
 	// parse input - done
 	// set url for open weather api as a variable - done
-	// request to api
+	// request to api - done (200)
 	// parse api response
 	// return result
 }
