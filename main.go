@@ -48,6 +48,7 @@ func main() {
 
 	fmt.Printf("The weather in %s is:\n", cityVar)
 	fmt.Printf("Overview: %+v\nDescription: %+v\n", result.Weather[0].Overview, result.Weather[0].Description)
+	return
 }
 
 func getForecast(weatherUrl string) (response, error) {
