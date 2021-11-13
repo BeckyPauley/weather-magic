@@ -1,40 +1,24 @@
 package main
 
 import (
-	"bufio"
+	"flag"
 	"fmt"
-	"log"
-	"os"
-
-	// "flags"
-
-	"github.com/joho/godotenv"
 )
 
 func main() {
 	fmt.Println("Welcome to Weather Magic!\n")
 
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Println("Enter the place you'd like to find the weather forecast for:\n")
-	city, _ := reader.ReadString('\n')
-	fmt.Println(city)
+	var cityVar string
 
-	// weatherKey := os.Getenv("WEATHER_KEY")
+	flag.StringVar(&cityVar, "city", "", "the city to get the weather forecast for")
+	flag.Parse()
 
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
-
-	testEnv := os.Getenv("TEST_ENV")
-	fmt.Println(testEnv)
-
-	// weatherApi = api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
+	fmt.Printf("Getting the weather for: %s\n", cityVar)
 
 	// welcome message - done
 	// prompt for input (city name) - done
 	// check- print input (city name) - done
-	// parse input
+	// parse input - done
 	// set url for open weather api as a variable
 	// request to api
 	// parse api response
