@@ -7,7 +7,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-
 	"os"
 
 	"github.com/joho/godotenv"
@@ -46,7 +45,9 @@ func main() {
 	weatherUrl := "https://api.openweathermap.org/data/2.5/weather?q=" + cityVar + "&appid=" + weatherKey
 
 	result, err := getForecast(weatherUrl)
-	fmt.Println(result.Weather)
+
+	fmt.Printf("The weather in %s is:\n", cityVar)
+	fmt.Printf("Overview: %+v\nDescription: %+v\n", result.Weather[0].Overview, result.Weather[0].Description)
 }
 
 func getForecast(weatherUrl string) (response, error) {
@@ -83,4 +84,5 @@ func getForecast(weatherUrl string) (response, error) {
 	}
 
 	return w, err
+
 }
