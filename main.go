@@ -13,8 +13,17 @@ import (
 	"github.com/joho/godotenv"
 )
 
-type name struct {
-	Name string `json:"name"`
+type weather struct {
+	//Id          string `json:"id"`
+	Overview    string `json:"main"`
+	Description string `json:"description"`
+}
+
+type response struct {
+	//Coordinates coord
+	Weather []weather `json:"weather"`
+	//Climate climate
+	//Visibility visibility
 }
 
 func main() {
@@ -50,7 +59,7 @@ func main() {
 
 	fmt.Printf("HTTP status: %s\n", res.Status)
 
-	w := name{}
+	w := response{}
 
 	if res.Body != nil {
 		defer res.Body.Close()
@@ -68,7 +77,7 @@ func main() {
 			string(body), err.Error())
 	}
 
-	fmt.Println(w)
+	fmt.Println(w.Weather)
 
 	// welcome message - done
 	// prompt for input (city name) - done
@@ -76,6 +85,6 @@ func main() {
 	// parse input - done
 	// set url for open weather api as a variable - done
 	// request to api - done (200)
-	// parse api response - basic done
+	// parse api response - basic done, extract weather done
 	// return result
 }
