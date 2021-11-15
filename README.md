@@ -15,13 +15,13 @@ N/A- For future versions.
 
 ```
 go build
-./weather-magic --city=[cityname]
+./weather-magic --city=[cityname] --info=[info]
 ```
-e.g.: `./weather-magic --city=london`
+e.g.: `./weather-magic --city=london --info=temperature`
 
-Returns overview and detail of the weather for your chosen location, e.g:
+Returns the current weather for your chosen location, e.g:
 ```
-The weather in london is:
+The weather in London is:
 Overview: Clouds
 Description: overcast clouds
 ```

@@ -34,11 +34,13 @@ func main() {
 	fmt.Println("Welcome to Weather Magic!\n")
 
 	var cityVar string
+	var weatherVar string
 
 	flag.StringVar(&cityVar, "city", "", "the city to get the weather forecast for")
+	flag.StringVar(&weatherVar, "info", "", "the weather forecast info you'd like to know")
 	flag.Parse()
 
-	fmt.Printf("Getting the weather for: %s\n", strings.Title(cityVar))
+	fmt.Printf("Getting the current weather in %s\n\n", strings.Title(cityVar))
 
 	err := godotenv.Load()
 	if err != nil {
@@ -51,10 +53,14 @@ func main() {
 
 	result, err := getForecast(weatherUrl)
 
-	fmt.Printf("The weather in %s is:\n", strings.Title(cityVar))
-	fmt.Printf("Overview: %+v\nDescription: %+v\n", result.Weather[0].Overview, result.Weather[0].Description)
-	fmt.Printf("Temperature: %+v\nFeels-like: %+v\n", result.Temperature.Temp, result.Temperature.Feels)
-	fmt.Printf("Visibility: %+v\n", result.Visibility)
+	fmt.Printf("The %s in %s is:\n", weatherVar, strings.Title(cityVar))
+	if weatherVar == "weather" {
+		fmt.Printf("Overview: %+v\nDescription: %+v\n", result.Weather[0].Overview, result.Weather[0].Description)
+	} else if weatherVar == "temperature" {
+		fmt.Printf("Temperature: %+v\nFeels-like: %+ v\n", result.Temperature.Temp, result.Temperature.Feels)
+	} else if weatherVar == "visibility" {
+		fmt.Printf("Visibility: %+v\n", result.Visibility)
+	}
 	return
 }
 
@@ -71,7 +77,7 @@ func getForecast(weatherUrl string) (response, error) {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("HTTP status: %s\n", res.Status)
+	// fmt.Printf("HTTP status: %s\n", res.Status)
 
 	w := response{}
 
