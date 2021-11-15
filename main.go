@@ -8,9 +8,15 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"strings"
 
 	"github.com/joho/godotenv"
 )
+
+type temperature struct {
+	Temp  float32 `json:"temp"`
+	Feels float32 `json:"feels_like"`
+}
 
 type weather struct {
 	//Id          string `json:"id"`
@@ -19,10 +25,9 @@ type weather struct {
 }
 
 type response struct {
-	//Coordinates coord
-	Weather []weather `json:"weather"`
-	//Climate climate
-	//Visibility visibility
+	Weather     []weather   `json:"weather"`
+	Temperature temperature `json:"main"`
+	Visibility  int         `json:"visibility"`
 }
 
 func main() {
@@ -33,7 +38,7 @@ func main() {
 	flag.StringVar(&cityVar, "city", "", "the city to get the weather forecast for")
 	flag.Parse()
 
-	fmt.Printf("Getting the weather for: %s\n", cityVar)
+	fmt.Printf("Getting the weather for: %s\n", strings.Title(cityVar))
 
 	err := godotenv.Load()
 	if err != nil {
@@ -46,8 +51,10 @@ func main() {
 
 	result, err := getForecast(weatherUrl)
 
-	fmt.Printf("The weather in %s is:\n", cityVar)
+	fmt.Printf("The weather in %s is:\n", strings.Title(cityVar))
 	fmt.Printf("Overview: %+v\nDescription: %+v\n", result.Weather[0].Overview, result.Weather[0].Description)
+	fmt.Printf("Temperature: %+v\nFeels-like: %+v\n", result.Temperature.Temp, result.Temperature.Feels)
+	fmt.Printf("Visibility: %+v\n", result.Visibility)
 	return
 }
 
